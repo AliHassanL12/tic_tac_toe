@@ -1,8 +1,8 @@
 const gameboard = (function() {
     const gameboardArray = [
-        ['-','-','-'],
-        ['-','-','-'],
-        ['-','-','-'],
+        '-','-','-',
+        '-','-','-',
+        '-','-','-',
     ];
 
     const resetBoard = () => gameboardArray = [];
@@ -11,18 +11,34 @@ const gameboard = (function() {
         console.log(gameboardArray)
     }
 
+    function placeMark(player, index) {
+        if ((index >= 1 && index <= 9) && (gameboardArray[index - 1] === '-')) {
+            gameboardArray[index - 1] = player; 
+            display();
+        }
+    }
+
     return {
         resetBoard,
-        display
+        display,
+        placeMark
     }
 })();
 
 const game = (function() {
     const players = createPlayers(); 
 
-    gameboard.display();
+    function nextTurn() {
+        players.switchPlayers();
+    }
+
+    function playTurn(index) {
+        gameboard.placeMark(players.getCurrentPlayer(), index);
+        nextTurn();
+
+    }
     return {
-    
+        playTurn,
     }
 
 })();
