@@ -2,21 +2,36 @@ const gameboard = (function() {
     const gameboardArray = [];
 
     return {
-        
+
     }
 })();
 
 const game = (function() {
-    const playerOne = createPlayer('X');
-    const playerTwo = createPlayer('Y');
+    const players = createPlayers(); 
+    
+    return {
+    
+    }
+
 })();
 
-function createPlayer(marker) {
-    const marker = marker; 
+function createPlayers() {
+    const playerX = 'X';
+    const playerY = 'Y';
+    let currentPlayer = playerX;
 
-    const getMarker = () => marker; 
+    function getCurrentPlayer() {
+        return currentPlayer;
+        switchPlayers();
+    }
+
+    function switchPlayers() {
+        currentPlayer = (currentPlayer === playerX) ? playerY : playerX
+    }
+
     return {
-        getMarker
+        getCurrentPlayer,
+        switchPlayers
     }
 }
 
