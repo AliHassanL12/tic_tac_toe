@@ -1,24 +1,18 @@
 const gameboard = (function() {
-    const gameboardArray = []
-
-    const playerOne = createPlayer('X');
-    const playerTwo = createPlayer('Y');
-
-    const getPlayerOneMarker = () => playerOne.getMarker();
-    const getPlayerTwoMarker = () => playerTwo.getMarker();
+    const gameboardArray = [];
 
     return {
-        getPlayerOneMarker,
-        getPlayerTwoMarker
+        
     }
 })();
 
 const game = (function() {
-    
+    const playerOne = createPlayer('X');
+    const playerTwo = createPlayer('Y');
 })();
 
 function createPlayer(marker) {
-    this.marker = marker;
+    const marker = marker; 
 
     const getMarker = () => marker; 
     return {
