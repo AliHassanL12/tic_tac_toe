@@ -1,14 +1,26 @@
 const gameboard = (function() {
-    const gameboardArray = [];
+    const gameboardArray = [
+        ['-','-','-'],
+        ['-','-','-'],
+        ['-','-','-'],
+    ];
+
+    const resetBoard = () => gameboardArray = [];
+
+    function display() {
+        console.log(gameboardArray)
+    }
 
     return {
-
+        resetBoard,
+        display
     }
 })();
 
 const game = (function() {
     const players = createPlayers(); 
-    
+
+    gameboard.display();
     return {
     
     }
@@ -20,13 +32,10 @@ function createPlayers() {
     const playerY = 'Y';
     let currentPlayer = playerX;
 
-    function getCurrentPlayer() {
-        return currentPlayer;
-        switchPlayers();
-    }
+    const getCurrentPlayer = () => currentPlayer;
 
     function switchPlayers() {
-        currentPlayer = (currentPlayer === playerX) ? playerY : playerX
+        currentPlayer = (currentPlayer === playerX) ? playerY : playerX; 
     }
 
     return {
