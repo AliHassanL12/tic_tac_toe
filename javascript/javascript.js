@@ -18,10 +18,17 @@ const gameboard = (function() {
         }
     }
 
+    function canPlace(index) {
+        if (gameboardArray[index - 1] === '-') return true;
+    }
+
+    display();
+
     return {
         resetBoard,
         display,
-        placeMark
+        placeMark,
+        canPlace
     }
 })();
 
@@ -33,8 +40,13 @@ const game = (function() {
     }
 
     function playTurn(index) {
-        gameboard.placeMark(players.getCurrentPlayer(), index);
-        nextTurn();
+        if (gameboard.canPlace(index)) {
+            gameboard.placeMark(players.getCurrentPlayer(), index);
+            nextTurn();
+        }
+        else {
+            console.log('That spot is already taken. Choose another.');
+        }
 
     }
     return {
