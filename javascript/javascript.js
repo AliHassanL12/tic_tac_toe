@@ -42,7 +42,7 @@ const game = (function() {
 
     function isGameOver(currentPlayer, a, b) {
         const arr = gameboard.getBoard();
-        if(checkRow(arr, a, b) || checkColumn(arr, b)) {
+        if(checkRow(arr, a, b) || checkColumn(arr, b, currentPlayer) || checkDiagonal(arr, currentPlayer)) {
             console.log(`${currentPlayer} wins!`);
         };
     }
@@ -56,12 +56,24 @@ const game = (function() {
         }
     }
 
-    function checkColumn(arr, b) {
+    function checkColumn(arr, b, currentPlayer) {
         if (
-            ((arr[0][b] === 'X') || (arr[0][b] === 'Y')) &&
-            ((arr[1][b] === 'X') || (arr[1][b] === 'Y')) &&
-            ((arr[2][b] === 'X') || (arr[2][b] === 'Y'))
+            (arr[0][b] === currentPlayer) &&
+            (arr[1][b] === currentPlayer) &&
+            (arr[2][b] === currentPlayer) 
         ) return true; 
+    }
+
+    function checkDiagonal(arr, currentPlayer) {
+        if (
+            ((arr[0][0] === currentPlayer) &&
+            (arr[1][1] === currentPlayer) &&
+            (arr[2][2] === currentPlayer))
+            ||
+            ((arr[0][2] === currentPlayer) &&
+            (arr[1][1] === currentPlayer) &&
+            (arr[2][0] === currentPlayer))
+        ) return true;
     }
 
     function nextTurn() {
