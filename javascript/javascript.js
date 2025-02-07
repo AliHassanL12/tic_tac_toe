@@ -42,8 +42,7 @@ const game = (function() {
 
     function isGameOver(currentPlayer, a, b) {
         const arr = gameboard.getBoard();
-        checkRow(arr, a, b);
-        if(checkRow(arr, a, b)) {
+        if(checkRow(arr, a, b) || checkColumn(arr, b)) {
             console.log(`${currentPlayer} wins!`);
         };
     }
@@ -55,6 +54,14 @@ const game = (function() {
         function checkWin(element) {
             return element === arr[a][b];
         }
+    }
+
+    function checkColumn(arr, b) {
+        if (
+            ((arr[0][b] === 'X') || (arr[0][b] === 'Y')) &&
+            ((arr[1][b] === 'X') || (arr[1][b] === 'Y')) &&
+            ((arr[2][b] === 'X') || (arr[2][b] === 'Y'))
+        ) return true; 
     }
 
     function nextTurn() {
