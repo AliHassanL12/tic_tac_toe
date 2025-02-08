@@ -26,5 +26,7 @@ body {
     justify-content: center;
     align-items: center;
     border: 1px solid black;
-    flex-grow: 1;
+    flex-grow: 0;
+    flex-basis: 100%;
+    flex-shrink: 1;
 }
