@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: rgb(177, 243, 243);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boardContainer {
+    display: flex;
+    flex-direction: column;
+    height: 65%;
+    width: 45%;
+    border: 1px solid black; 
+}
+
+.boardSubContainer {
+    display: flex;
+    flex-grow: 1;
+}
+.boardPieces {
+    border: 1px solid red;
+    flex-grow: 1;
+}

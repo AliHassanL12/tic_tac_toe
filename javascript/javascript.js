@@ -4,6 +4,7 @@ const gameboard = (function() {
         ['-','-','-'],
         ['-','-','-'],
     ];
+    const baseBoard = gameboardArray
 
     function resetBoard() {
         gameboardArray = [
@@ -11,6 +12,7 @@ const gameboard = (function() {
             ['-','-','-'],
             ['-','-','-'],
         ];
+        display();
     }
 
     function display() {
@@ -133,5 +135,30 @@ const players = (function() {
     }
 })();
 
+const dom = (function() {
+    function display() {
+        const boardArray = gameboard.getBoard();
+        const DOMobj = getRefElements();
+        for (let i = 0; i < boardArray.length; i++) {
+            const divContainer = document.createElement('div');
+            divContainer.classList.add('boardSubContainer')
+            DOMobj.boardContainer.appendChild(divContainer);
+            for (let j = 0; j < boardArray.length; j++) {
+                const div = document.createElement('div');
+                div.classList.add('boardPieces')
+                div.textContent = boardArray[i][j];
+                divContainer.appendChild(div);
+            } 
+        }
+    }
 
-
+    function getRefElements() {
+        const boardContainer = document.querySelector('.boardContainer');
+        return {
+            boardContainer
+        }
+    }
+    return {
+        display
+    }
+})();
