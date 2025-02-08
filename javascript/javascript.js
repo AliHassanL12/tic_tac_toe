@@ -57,6 +57,8 @@ const game = (function() {
             console.log(`${currentPlayer} wins!`);
             gameboard.resetBoard();
             players.resetPlayers();
+            dom.removeBoard();
+            dom.display();
             return true;
         } else {
             return false; 
@@ -137,6 +139,8 @@ const players = (function() {
 })();
 
 const dom = (function() {
+    display();
+    
     function display() {
         const boardArray = gameboard.getBoard();
         const DOMobj = getRefElements();
@@ -188,5 +192,3 @@ const dom = (function() {
         removeBoard
     }
 })();
-
-dom.display()
