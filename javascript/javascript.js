@@ -22,7 +22,8 @@ const gameboard = (function() {
     function placeMark(playerMarker, a, b) {
         if ((a >= 0 && b >=0) && (a <= 3 && b <= 3) && (gameboardArray[a][b] === '-')) {
             gameboardArray[a][b] = playerMarker;
-            display();
+            dom.removeBoard();
+            dom.display();
         }
     }
 
@@ -146,10 +147,12 @@ const dom = (function() {
     function createBoard(boardArray, DOMobj) {
         for (let i = 0; i < boardArray.length; i++) {
             const divContainer = document.createElement('div');
+            divContainer.setAttribute('id', i);
             divContainer.classList.add('boardSubContainer')
             DOMobj.boardContainer.appendChild(divContainer);
             for (let j = 0; j < boardArray.length; j++) {
                 const div = document.createElement('div');
+                div.setAttribute('id', j);
                 div.classList.add('boardPieces')
                 div.textContent = boardArray[i][j];
                 divContainer.appendChild(div);
@@ -157,12 +160,22 @@ const dom = (function() {
         }
     }
 
-    // function attachListeners() {
-    //     const boardPieces = document.querySelectorAll('.boardPieces');
-    //     boardPieces.forEach((cell) => {
-    //         cell.addEventListener('click', play)
-    //     })
-    // }
+    function attachListeners() {
+        const boardPieces = document.querySelectorAll('.boardPieces');
+        boardPieces.forEach((cell) => {
+            cell.addEventListener('click', (event) => {
+                const cellParent = cell.parentNode;
+                game.playTurn(cellParent.id, cell.id);
+            });
+        })
+    }
+
+    function removeBoard() {
+        const boardContainer = document.querySelector('.boardContainer');
+        while (boardContainer.firstChild) {
+            boardContainer.firstChild.remove();
+        }
+    }
 
     function getRefElements() {
         const boardContainer = document.querySelector('.boardContainer');
@@ -171,7 +184,8 @@ const dom = (function() {
         }
     }
     return {
-        display
+        display,
+        removeBoard
     }
 })();
 
