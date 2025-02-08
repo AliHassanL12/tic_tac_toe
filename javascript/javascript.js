@@ -1,11 +1,17 @@
 const gameboard = (function() {
-    const gameboardArray = [
+    let gameboardArray = [
         ['-','-','-'],
         ['-','-','-'],
         ['-','-','-'],
     ];
 
-    const resetBoard = () => gameboardArray = [];
+    function resetBoard() {
+        gameboardArray = [
+            ['-','-','-'],
+            ['-','-','-'],
+            ['-','-','-'],
+        ];
+    }
 
     function display() {
         console.log(gameboardArray);
@@ -38,13 +44,20 @@ const gameboard = (function() {
 })();
 
 const game = (function() {
-    const players = createPlayers(); 
 
     function isGameOver(currentPlayer, a, b) {
         const arr = gameboard.getBoard();
-        if(checkRow(arr, a, b) || checkColumn(arr, b, currentPlayer) || checkDiagonal(arr, currentPlayer)) {
+        if (checkRow(arr, a, b) || 
+        checkColumn(arr, b, currentPlayer) || 
+        checkDiagonal(arr, currentPlayer)) 
+        {
             console.log(`${currentPlayer} wins!`);
-        };
+            gameboard.resetBoard();
+            players.resetPlayers();
+            return true;
+        } else {
+            return false; 
+        }
     }
 
     function checkRow(arr, a, b) {
@@ -84,8 +97,9 @@ const game = (function() {
         if (gameboard.canPlace(a, b)) {
             const currentPlayer = players.getCurrentPlayer();
             gameboard.placeMark(currentPlayer, a, b);
-            isGameOver(currentPlayer, a, b);
-            nextTurn();
+            if (!isGameOver(currentPlayer, a, b)) {
+                nextTurn();
+            }
         }
         else {
             console.log('That spot is already taken. Choose another.');
@@ -97,7 +111,7 @@ const game = (function() {
 
 })();
 
-function createPlayers() {
+const players = (function() {
     const playerX = 'X';
     const playerY = 'Y';
     let currentPlayer = playerX;
@@ -108,10 +122,16 @@ function createPlayers() {
         currentPlayer = (currentPlayer === playerX) ? playerY : playerX; 
     }
 
+    function resetPlayers() {
+        currentPlayer = playerX;
+    }
+
     return {
         getCurrentPlayer,
-        switchPlayers
+        switchPlayers,
+        resetPlayers
     }
-}
+})();
+
 
 
