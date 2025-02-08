@@ -20,7 +20,11 @@ body {
     display: flex;
     flex-grow: 1;
 }
+
 .boardPieces {
-    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
     flex-grow: 1;
 }

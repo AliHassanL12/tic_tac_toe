@@ -139,6 +139,10 @@ const dom = (function() {
     function display() {
         const boardArray = gameboard.getBoard();
         const DOMobj = getRefElements();
+        createBoard(boardArray, DOMobj);
+    }
+
+    function createBoard(boardArray, DOMobj) {
         for (let i = 0; i < boardArray.length; i++) {
             const divContainer = document.createElement('div');
             divContainer.classList.add('boardSubContainer')
@@ -162,3 +166,5 @@ const dom = (function() {
         display
     }
 })();
+
+dom.display()
