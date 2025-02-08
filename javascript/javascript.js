@@ -140,6 +140,7 @@ const dom = (function() {
         const boardArray = gameboard.getBoard();
         const DOMobj = getRefElements();
         createBoard(boardArray, DOMobj);
+        attachListeners();
     }
 
     function createBoard(boardArray, DOMobj) {
@@ -155,6 +156,13 @@ const dom = (function() {
             } 
         }
     }
+
+    // function attachListeners() {
+    //     const boardPieces = document.querySelectorAll('.boardPieces');
+    //     boardPieces.forEach((cell) => {
+    //         cell.addEventListener('click', play)
+    //     })
+    // }
 
     function getRefElements() {
         const boardContainer = document.querySelector('.boardContainer');
