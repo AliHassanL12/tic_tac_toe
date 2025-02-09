@@ -54,6 +54,7 @@ const game = (function() {
         checkColumn(arr, b, currentPlayer) || 
         checkDiagonal(arr, currentPlayer)) 
         {
+            dom.printWinMsg(currentPlayer);
             console.log(`${currentPlayer} wins!`);
             gameboard.resetBoard();
             players.resetPlayers();
@@ -118,7 +119,7 @@ const game = (function() {
 
 const players = (function() {
     const playerX = 'X';
-    const playerY = 'Y';
+    const playerY = 'O';
     let currentPlayer = playerX;
 
     const getCurrentPlayer = () => currentPlayer;
@@ -140,7 +141,7 @@ const players = (function() {
 
 const dom = (function() {
     display();
-    
+
     function display() {
         const boardArray = gameboard.getBoard();
         const DOMobj = getRefElements();
@@ -183,12 +184,29 @@ const dom = (function() {
 
     function getRefElements() {
         const boardContainer = document.querySelector('.boardContainer');
+        const winMsg = document.querySelector('.winMsg')
         return {
-            boardContainer
+            boardContainer,
+            winMsg
         }
+    }
+
+    function printWinMsg(currentPlayer) {
+        const elementRef = getRefElements();
+        elementRef.winMsg.textContent = `Congratulations, player ${currentPlayer} wins!`;
+        addRestartButton(elementRef);
+    }
+
+    function addRestartButton(elementRef) {
+        const restartGameBtn = document.createElement('button');
+        restartGameBtn.classList.add('restartBtn');
+        restartGameBtn.textContent = 'Restart';
+        elementRef.winMsg.appendChild(restartGameBtn);
+
     }
     return {
         display,
-        removeBoard
+        removeBoard,
+        printWinMsg
     }
 })();
