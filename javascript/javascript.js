@@ -55,11 +55,6 @@ const game = (function() {
         checkDiagonal(arr, currentPlayer)) 
         {
             dom.printWinMsg(currentPlayer);
-            console.log(`${currentPlayer} wins!`);
-            gameboard.resetBoard();
-            players.resetPlayers();
-            dom.removeBoard();
-            dom.display();
             return true;
         } else {
             return false; 
@@ -202,8 +197,23 @@ const dom = (function() {
         restartGameBtn.classList.add('restartBtn');
         restartGameBtn.textContent = 'Restart';
         elementRef.winMsg.appendChild(restartGameBtn);
-
+        restartGameBtn.addEventListener('click', gameboard.resetBoard);
+        restartGameBtn.addEventListener('click', players.resetPlayers);
+        restartGameBtn.addEventListener('click', dom.removeBoard);
+        restartGameBtn.addEventListener('click', dom.display);
+        restartGameBtn.addEventListener('click', () => removeWinMsg(elementRef));
     }
+
+    function removeWinMsg(elementRef) {
+        elementRef.winMsg.textContent = '';
+        removeRestartButton(elementRef);
+    }
+
+    function removeRestartButton(elementRef) {
+        const btn = document.querySelector('restartBtn');
+        btn.remove();
+    }
+
     return {
         display,
         removeBoard,
