@@ -55,6 +55,7 @@ const game = (function() {
         checkDiagonal(arr, currentPlayer)) 
         {
             dom.printWinMsg(currentPlayer);
+            dom.setGameIsOver(true);
             return true;
         } else {
             return false; 
@@ -135,6 +136,9 @@ const players = (function() {
 })();
 
 const dom = (function() {
+
+    let gameOver = false; 
+
     display();
 
     function display() {
@@ -165,7 +169,7 @@ const dom = (function() {
         boardPieces.forEach((cell) => {
             cell.addEventListener('click', (event) => {
                 const cellParent = cell.parentNode;
-                game.playTurn(cellParent.id, cell.id);
+                if (!gameOver) game.playTurn(cellParent.id, cell.id);
             });
         })
     }
@@ -197,11 +201,17 @@ const dom = (function() {
         restartGameBtn.classList.add('restartBtn');
         restartGameBtn.textContent = 'Restart';
         elementRef.winMsg.appendChild(restartGameBtn);
-        restartGameBtn.addEventListener('click', gameboard.resetBoard);
-        restartGameBtn.addEventListener('click', players.resetPlayers);
-        restartGameBtn.addEventListener('click', dom.removeBoard);
-        restartGameBtn.addEventListener('click', dom.display);
-        restartGameBtn.addEventListener('click', () => removeWinMsg(elementRef));
+        restartGameBtn.addEventListener('click', () => resetDOMBoard(elementRef));
+    }
+
+
+    function resetDOMBoard(elementRef) {
+        dom.setGameIsOver(false);
+        gameboard.resetBoard();
+        players.resetPlayers();
+        dom.removeBoard();
+        dom.display();
+        removeWinMsg(elementRef);
     }
 
     function removeWinMsg(elementRef) {
@@ -214,9 +224,18 @@ const dom = (function() {
         btn.remove();
     }
 
+    function setGameIsOver(boolean) {
+        if (boolean) {
+            gameOver = true;
+        } else {
+            gameOver = false;
+        }
+    }
+
     return {
         display,
         removeBoard,
-        printWinMsg
+        printWinMsg,
+        setGameIsOver
     }
 })();
