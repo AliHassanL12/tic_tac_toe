@@ -204,35 +204,30 @@ const dom = (function() {
     function printMsg(message) {
         const elementRef = getRefElements();
         elementRef.winMsg.textContent = message;
-        addRestartButton(elementRef);
+        addRestartButton();
     }
 
-    function addRestartButton(elementRef) {
+    function addRestartButton() {
+        const domRef = getRefElements()
         const restartGameBtn = document.createElement('button');
         restartGameBtn.classList.add('restartBtn');
         restartGameBtn.textContent = 'Restart';
-        elementRef.winMsg.appendChild(restartGameBtn);
-        restartGameBtn.addEventListener('click', () => resetDOMBoard(elementRef));
+        domRef.winMsg.appendChild(restartGameBtn)
+        restartGameBtn.addEventListener('click', () => resetDOMBoard());
     }
 
 
-    function resetDOMBoard(elementRef) {
+    function resetDOMBoard() {
         dom.setGameIsOver(false);
+        removeWinMsg(getRefElements());
         gameboard.resetBoard();
         players.resetPlayers();
         dom.removeBoard();
         dom.display();
-        removeWinMsg(elementRef);
     }
 
     function removeWinMsg(elementRef) {
         elementRef.winMsg.textContent = '';
-        removeRestartButton(elementRef);
-    }
-
-    function removeRestartButton(elementRef) {
-        const btn = document.querySelector('restartBtn');
-        btn.remove();
     }
 
     function setGameIsOver(boolean) {
