@@ -12,12 +12,8 @@ const gameboard = (function() {
             ['-','-','-'],
             ['-','-','-'],
         ];
-        display();
     }
 
-    function display() {
-        console.log(gameboardArray);
-    }
 
     function placeMark(playerMarker, a, b) {
         if ((a >= 0 && b >=0) && (a <= 3 && b <= 3) && (gameboardArray[a][b] === '-')) {
@@ -35,11 +31,8 @@ const gameboard = (function() {
         return gameboardArray;
     }
 
-    display();
-
     return {
         resetBoard,
-        display,
         placeMark,
         canPlace,
         getBoard
@@ -63,7 +56,6 @@ const game = (function() {
             const isNotDraw = arr.some(subArray => {
                 return subArray.includes(emptyCell); 
             })
-            console.log(isNotDraw);
             if (!isNotDraw) {
                 const drawMsg = `Draw! Neither win!`;
                 dom.printMsg(drawMsg);
