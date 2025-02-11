@@ -4,7 +4,6 @@ const gameboard = (function() {
         ['-','-','-'],
         ['-','-','-'],
     ];
-    const baseBoard = gameboardArray
 
     function resetBoard() {
         gameboardArray = [
@@ -47,8 +46,8 @@ const game = (function() {
         checkColumn(arr, b, currentPlayer) || 
         checkDiagonal(arr, currentPlayer)) 
         {
-            const winMsg = `Congratulations, ${currentPlayer} wins!`
-            dom.printMsg(winMsg);
+            const message = `Congratulations, ${currentPlayer} wins!`
+            dom.printMsg(message);
             dom.setGameIsOver(true);
             return true;
         } else {
@@ -106,9 +105,6 @@ const game = (function() {
                 nextTurn();
             }
         }
-        else {
-            console.log('That spot is already taken. Choose another.');
-        }
     }
     return {
         playTurn,
@@ -151,6 +147,15 @@ const dom = (function() {
         attachListeners();
     }
 
+    function getRefElements() {
+        const boardContainer = document.querySelector('.boardContainer');
+        const message = document.querySelector('.message')
+        return {
+            boardContainer,
+            message
+        }
+    }
+
     function createBoard(boardArray, DOMobj) {
         for (let i = 0; i < boardArray.length; i++) {
             const divContainer = document.createElement('div');
@@ -177,6 +182,24 @@ const dom = (function() {
         })
     }
 
+
+    function resetDOMBoard() {
+        setGameIsOver(false);
+        removeMessage(getRefElements());
+        gameboard.resetBoard();
+        players.resetPlayers();
+        removeBoard();
+        display();
+    }
+
+    function setGameIsOver(boolean) {
+        gameOver = boolean;
+    }
+
+    function removeMessage(elementRef) {
+        elementRef.message.textContent = '';
+    }
+
     function removeBoard() {
         const boardContainer = document.querySelector('.boardContainer');
         while (boardContainer.firstChild) {
@@ -184,18 +207,9 @@ const dom = (function() {
         }
     }
 
-    function getRefElements() {
-        const boardContainer = document.querySelector('.boardContainer');
-        const winMsg = document.querySelector('.winMsg')
-        return {
-            boardContainer,
-            winMsg
-        }
-    }
-
     function printMsg(message) {
         const elementRef = getRefElements();
-        elementRef.winMsg.textContent = message;
+        elementRef.message.textContent = message;
         addRestartButton();
     }
 
@@ -204,31 +218,15 @@ const dom = (function() {
         const restartGameBtn = document.createElement('button');
         restartGameBtn.classList.add('restartBtn');
         restartGameBtn.textContent = 'Restart';
-        domRef.winMsg.appendChild(restartGameBtn)
+        domRef.message.appendChild(restartGameBtn)
         restartGameBtn.addEventListener('click', () => resetDOMBoard());
     }
 
 
-    function resetDOMBoard() {
-        dom.setGameIsOver(false);
-        removeWinMsg(getRefElements());
-        gameboard.resetBoard();
-        players.resetPlayers();
-        dom.removeBoard();
-        dom.display();
-    }
 
-    function removeWinMsg(elementRef) {
-        elementRef.winMsg.textContent = '';
-    }
+    // Creation of Start Button and logic to input names and begin playing
+    
 
-    function setGameIsOver(boolean) {
-        if (boolean) {
-            gameOver = true;
-        } else {
-            gameOver = false;
-        }
-    }
 
     return {
         display,
