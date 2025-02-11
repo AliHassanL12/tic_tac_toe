@@ -54,10 +54,21 @@ const game = (function() {
         checkColumn(arr, b, currentPlayer) || 
         checkDiagonal(arr, currentPlayer)) 
         {
-            dom.printWinMsg(currentPlayer);
+            const winMsg = `Congratulations, ${currentPlayer} wins!`
+            dom.printMsg(winMsg);
             dom.setGameIsOver(true);
             return true;
         } else {
+            const emptyCell = '-';
+            const isNotDraw = arr.some(subArray => {
+                return subArray.includes(emptyCell); 
+            })
+            console.log(isNotDraw);
+            if (!isNotDraw) {
+                const drawMsg = `Draw! Neither win!`;
+                dom.printMsg(drawMsg);
+                return true;
+            }
             return false; 
         }
     }
@@ -190,9 +201,9 @@ const dom = (function() {
         }
     }
 
-    function printWinMsg(currentPlayer) {
+    function printMsg(message) {
         const elementRef = getRefElements();
-        elementRef.winMsg.textContent = `Congratulations, player ${currentPlayer} wins!`;
+        elementRef.winMsg.textContent = message;
         addRestartButton(elementRef);
     }
 
@@ -235,7 +246,7 @@ const dom = (function() {
     return {
         display,
         removeBoard,
-        printWinMsg,
+        printMsg,
         setGameIsOver
     }
 })();
