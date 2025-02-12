@@ -182,7 +182,7 @@ const dom = (function() {
         //listener for individual board pieces
         const boardPieces = document.querySelectorAll('.boardPieces');
         boardPieces.forEach((cell) => {
-            cell.addEventListener('click', (event) => {
+            cell.addEventListener('click', () => {
                 const cellParent = cell.parentNode;
                 if (!gameOver) game.playTurn(cellParent.id, cell.id);
             });
@@ -227,11 +227,7 @@ const dom = (function() {
     function printMsg(message) {
         const elementRef = getRefElements();
         elementRef.message.textContent = message;
-        addRestartButton();
     }
-
-    // Creation of Start Button and logic to input names and begin playing
-    
 
 
     return {
