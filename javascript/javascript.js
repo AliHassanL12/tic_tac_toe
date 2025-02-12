@@ -149,10 +149,12 @@ const dom = (function() {
 
     function getRefElements() {
         const boardContainer = document.querySelector('.boardContainer');
-        const message = document.querySelector('.message')
+        const message = document.querySelector('.message');
+        const restartButton = document.querySelector('.restartButton');
         return {
             boardContainer,
-            message
+            message,
+            restartButton
         }
     }
 
@@ -173,6 +175,9 @@ const dom = (function() {
     }
 
     function attachListeners() {
+        const elementReferences = getRefElements();
+
+        //listener for individual board pieces
         const boardPieces = document.querySelectorAll('.boardPieces');
         boardPieces.forEach((cell) => {
             cell.addEventListener('click', (event) => {
@@ -180,6 +185,9 @@ const dom = (function() {
                 if (!gameOver) game.playTurn(cellParent.id, cell.id);
             });
         })
+
+        // listener for restart button
+        elementReferences.restartButton.addEventListener('click', () => resetDOMBoard());
     }
 
 
@@ -197,7 +205,8 @@ const dom = (function() {
     }
 
     function removeMessage(elementRef) {
-        elementRef.message.textContent = '';
+        if (elementRef.message.textContent) elementRef.message.textContent = '';
+        
     }
 
     function removeBoard() {
@@ -212,17 +221,6 @@ const dom = (function() {
         elementRef.message.textContent = message;
         addRestartButton();
     }
-
-    function addRestartButton() {
-        const domRef = getRefElements()
-        const restartGameBtn = document.createElement('button');
-        restartGameBtn.classList.add('restartBtn');
-        restartGameBtn.textContent = 'Restart';
-        domRef.message.appendChild(restartGameBtn)
-        restartGameBtn.addEventListener('click', () => resetDOMBoard());
-    }
-
-
 
     // Creation of Start Button and logic to input names and begin playing
     

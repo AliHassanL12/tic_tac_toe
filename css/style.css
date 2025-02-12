@@ -47,3 +47,9 @@ body {
     padding: 3px;
     margin-top: 8px;
 }
+
+.gameOptions button {
+    width: 90px;
+    padding: 4px;
+    margin: 10px;
+}
