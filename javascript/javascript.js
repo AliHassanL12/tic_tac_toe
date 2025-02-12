@@ -191,13 +191,20 @@ const dom = (function() {
         // listener for restart button
         elementReferences.restartButton.addEventListener('click', () => resetDOMBoard());
 
-        elementReferences.startGameButton.addEventListener('click', startGame);
+        if (elementReferences.startGameButton) {
+            elementReferences.startGameButton.addEventListener('click', startGame);
+        }
     }
 
     function startGame() {
+        const elementReferences = getRefElements();
         setGameIsOver(false);
+        removeElement(elementReferences.startGameButton);
     }
 
+    function removeElement(domReference) {
+        domReference.remove();
+    }
 
     function resetDOMBoard() {
         setGameIsOver(false);
