@@ -46,7 +46,8 @@ const game = (function() {
         checkColumn(arr, b, currentPlayer) || 
         checkDiagonal(arr, currentPlayer)) 
         {
-            const message = `Congratulations, ${currentPlayer} wins!`
+            const currentPlayerName = players.getName();
+            const message = `Congratulations, ${currentPlayerName} wins!`
             dom.printMsg(message);
             dom.setGameIsOver(true);
             return true;
@@ -115,6 +116,9 @@ const game = (function() {
 const players = (function() {
     const playerX = 'X';
     const playerY = 'O';
+
+    let playerXName, playerYName;
+
     let currentPlayer = playerX;
 
     const getCurrentPlayer = () => currentPlayer;
@@ -127,10 +131,21 @@ const players = (function() {
         currentPlayer = playerX;
     }
 
+    function setNames(name1, name2) {
+        playerXName = name1;
+        playerYName = name2;
+    }
+
+    function getName() {
+        return (currentPlayer === 'X' ) ? playerXName : playerYName;
+    }
+
     return {
         getCurrentPlayer,
         switchPlayers,
-        resetPlayers
+        resetPlayers,
+        setNames,
+        getName
     }
 })();
 
@@ -197,8 +212,11 @@ const dom = (function() {
     }
 
     function startGame() {
+        const nameX = prompt('Enter name for player X: ');
+        const nameY = prompt('Enter name for player Y: ');
         const elementReferences = getRefElements();
         setGameIsOver(false);
+        players.setNames(nameX, nameY);
         removeElement(elementReferences.startGameButton);
     }
 
