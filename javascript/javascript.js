@@ -136,7 +136,7 @@ const players = (function() {
 
 const dom = (function() {
 
-    let gameOver = false; 
+    let gameOver = true; 
 
     display();
 
@@ -151,10 +151,12 @@ const dom = (function() {
         const boardContainer = document.querySelector('.boardContainer');
         const message = document.querySelector('.message');
         const restartButton = document.querySelector('.restartButton');
+        const startGameButton = document.querySelector('.startGameButton');
         return {
             boardContainer,
             message,
-            restartButton
+            restartButton,
+            startGameButton
         }
     }
 
@@ -188,6 +190,12 @@ const dom = (function() {
 
         // listener for restart button
         elementReferences.restartButton.addEventListener('click', () => resetDOMBoard());
+
+        elementReferences.startGameButton.addEventListener('click', startGame);
+    }
+
+    function startGame() {
+        setGameIsOver(false);
     }
 
 
